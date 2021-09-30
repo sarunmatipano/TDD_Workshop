@@ -32,4 +32,11 @@ public class MyRange {
         return start - 47;
     }
 
+    public void validate() {
+        if(!input.startsWith("[") || !input.startsWith("(")){
+            throw new InputInvalidException("Input error");
+        }
+
+    }
+
 }
