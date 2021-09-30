@@ -20,17 +20,16 @@ public class MyRange {
         return input.startsWith("(");
     }
 
-
     public boolean isEndWithParentheses() {
         return input.endsWith(")");
     }
 
-    public int startNumber() {
-        return Integer.parseInt(input.substring(1,2));
-    }
-
-    public int endNumber() {
-        return Integer.parseInt(input.substring(3,4));
+    public int getStart() {
+        char start = input.charAt(1);
+        if(isStartWithInClude()) {
+            return start - 48;
+        }
+        return start - 47;
     }
 
 }

@@ -63,4 +63,20 @@ public class MyRangeTest {
         //assert
         assertTrue(actual,"ต้อง end ด้วย )");
     }
+
+    @Test
+    @DisplayName("case05 start number ) ")
+    public  void case05(){
+        // Arrange
+        String input = "[1,4)";
+        int expected = 1;
+        MyRange myRange = new MyRange(input);
+
+        // act
+        int actual = myRange.getStart();
+
+        //assert
+        assertEquals(expected, actual);
+    }
+
 }
