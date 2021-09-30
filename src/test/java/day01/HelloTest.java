@@ -12,7 +12,7 @@ public class HelloTest {
     private  Hello hello;
 
     @BeforeEach
-    public void initial(){
+    public void init(){
         hello = new Hello();
     }
 

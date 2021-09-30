@@ -8,23 +8,59 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class MyRangeTest {
 
-    private MyRange myRange;
-
-    @BeforeEach
-    public void initial(){
-        myRange = new MyRange();
-    }
-
     @Test
     @DisplayName("case01 start with [ ")
     public  void case01(){
         // Arrange
-        String input = "[";
+        String input = "[1,5)";
+        MyRange myRange = new MyRange(input);
 
         // act
-        boolean actual = myRange.startWithInClude(input);
+        boolean actual = myRange.isStartWithInClude();
 
         //assert
         assertTrue(actual,"ต้อง start ด้วย [");
+    }
+
+    @Test
+    @DisplayName("case02 end with ] ")
+    public  void case02(){
+        // Arrange
+        String input = "(1,5]";
+        MyRange myRange = new MyRange(input);
+
+        // act
+        boolean actual = myRange.isEndWithInClude();
+
+        //assert
+        assertTrue(actual,"ต้อง end ด้วย ]");
+    }
+
+    @Test
+    @DisplayName("case03 start with ( ")
+    public  void case03(){
+        // Arrange
+        String input = "(1,4]";
+        MyRange myRange = new MyRange(input);
+
+        // act
+        boolean actual = myRange.isStartWithParentheses();
+
+        //assert
+        assertTrue(actual,"ต้อง start ด้วย (");
+    }
+
+    @Test
+    @DisplayName("case04 end with ) ")
+    public  void case04(){
+        // Arrange
+        String input = "[1,4)";
+        MyRange myRange = new MyRange(input);
+
+        // act
+        boolean actual = myRange.isEndWithParentheses();
+
+        //assert
+        assertTrue(actual,"ต้อง end ด้วย )");
     }
 }
