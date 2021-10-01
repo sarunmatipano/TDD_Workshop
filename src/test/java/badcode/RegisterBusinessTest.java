@@ -81,7 +81,7 @@ class RegisterBusinessTest {
         speaker.setFirstName("Sarun");
         speaker.setLastName("Matipano");
         speaker.setEmail("sarunmatipano@gmail.com");
-        speaker.setExp(1);
+//        speaker.setExp(1);
 
         Exception exception =  assertThrows(SaveSpeakerException.class, () -> business.register(null, speaker));
         assertEquals(expected, exception.getMessage());

@@ -3,38 +3,43 @@ package badcode;
 import java.util.Arrays;
 
 public class RegisterBusiness {
+    private static  String[] domains = {"gmail.com", "live.com"};
 
     public Integer register(SpeakerRepository repository, Speaker speaker) {
         Integer speakerId;
-        String[] domains = {"gmail.com", "live.com"};
+        validateInput(speaker);
 
-        if (speaker.getFirstName() != null && !speaker.getFirstName().trim().equals("")) {
-            if (speaker.getLastName() != null && !speaker.getLastName().trim().equals("")) {
-                if (speaker.getEmail() != null && !speaker.getEmail().trim().equals("")) {
-                    // Your Tasks ...
-                    String emailDomain = getEmailDomain(speaker.getEmail()); // Avoid ArrayIndexOutOfBound
-                    if (Arrays.stream(domains).filter(it -> it.equals(emailDomain)).count() == 1) {
-                        int exp = speaker.getExp();
-                        speaker.setRegistrationFee(getFee(exp));
-                        try {
-                            speakerId = repository.saveSpeaker(speaker);
-                        } catch (Exception exception) {
-                            throw new SaveSpeakerException("Can't save a speaker.");
-                        }
-                    } else {
-                        throw new SpeakerDoesntMeetRequirementsException("Speaker doesn't meet our standard rules.");
-                    }
-                } else {
-                    throw new ArgumentNullException("Email is required.");
-                }
-            } else {
-                throw new ArgumentNullException("Last name is required.");
-            }
-        } else {
-            throw new ArgumentNullException("First name is required.");
+        int exp = speaker.getExp();
+        speaker.setRegistrationFee(getFee(exp));
+
+        try {
+            speakerId = repository.saveSpeaker(speaker);
+        } catch (Exception exception) {
+            throw new SaveSpeakerException("Can't save a speaker.");
         }
 
         return speakerId;
+    }
+
+    private void validateInput(Speaker speaker) {
+
+        if (isNullOrEmpty(speaker.getFirstName())) {
+            throw new ArgumentNullException("First name is required.");
+        }
+        if (isNullOrEmpty(speaker.getLastName())) {
+            throw new ArgumentNullException("Last name is required.");
+        }
+        if (isNullOrEmpty(speaker.getEmail())) {
+            throw new ArgumentNullException("Email is required.");
+        }
+        String emailDomain = getEmailDomain(speaker.getEmail());
+        if (Arrays.stream(domains).filter(it -> it.equals(emailDomain)).count() != 1) {
+            throw new SpeakerDoesntMeetRequirementsException("Speaker doesn't meet our standard rules.");
+        }
+    }
+
+    private boolean isNullOrEmpty(String firstName) {
+        return firstName == null || firstName.trim().equals("");
     }
 
     int getFee(int experienceYear) {
